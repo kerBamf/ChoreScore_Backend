@@ -8,11 +8,11 @@ const taskSchema = new mongoose.Schema(
             type: String
         },
         duration: {
-            required: [true, "All Fields Required"],
+            required: [true, "Duration Required"],
             type: Number
         },
         value: {
-            required: [true, "All Fields Required"],
+            required: [true, "Value Required"],
             type: Number
         },
         info: {
