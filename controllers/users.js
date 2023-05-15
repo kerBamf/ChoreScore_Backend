@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { Users } = require('../models')
 
-//All Tasks
+//All Users
 router.get('', async (req, res, next) => {
     try{
         let tasks = await Tasks.find({})
@@ -14,13 +14,24 @@ router.get('', async (req, res, next) => {
     }
 })
 
-//Single Task by ID
+//Single user
 router.get(':id', async (req, res, next) => {
     try{
-        let task = await Tasks.findById(req.params.id)
-        res.json(task)
+        let user = await Users.findById(req.params.id)
+        res.json(user)
     } catch(err) {
         console.log(err)
+    }
+})
+
+//New Task
+router.post('', async (req, res, next) => {
+    try {
+        let newUser = req.body
+        await Users.create(newUser)
+    } catch(err) {
+        console.log(err)
+        next()
     }
 })
 
