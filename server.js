@@ -1,9 +1,6 @@
 const express = require('express')
 const app = express()
 const PORT = process.env.PORT || 4000
-const { Rewards } = require('./models')
-const { Tasks } = require('./models')
-const { Users } = require('./models')
 const cors = require('cors')
 const taskController = require('./controllers/tasks')
 const userController = require('./controllers/users')
