@@ -11,6 +11,11 @@ const taskSchema = new mongoose.Schema(
             required: [true, "Duration Required"],
             type: Number
         },
+        difficulty: {
+            required: [true, "Difficulty Required"],
+            type: Number,
+            default: 1
+        },
         value: {
             required: [true, "Value Required"],
             type: Number
