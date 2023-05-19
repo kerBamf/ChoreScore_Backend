@@ -5,6 +5,7 @@ const cors = require('cors')
 const taskController = require('./controllers/tasks')
 const userController = require('./controllers/users')
 const rewardController = require('./controllers/rewards')
+const quotesController = require('./controllers/quotes')
 
 //Middleware
 app.use(cors())
@@ -12,6 +13,7 @@ app.use(express.json())
 app.use('/tasks', taskController)
 app.use('/users', userController)
 app.use('/rewards', rewardController)
+app.use('/quotes', quotesController)
 
 app.get('/', (req, res) => {
     res.send('So you want to actually get stuff done, eh?')
