@@ -2,13 +2,12 @@ const mongoose = require('mongoose')
 
 const quotesSchema = new mongoose.Schema(
     {
-        quotes: {
+        quote: {
             required: [true, "Quotes Required"],
-            type: Object
+            type: String
         },
-        timeSeeded: {
-            required: [true, "Time needed"],
-            type: Object
+        author: {
+            type: String
         }
     }, {timestamps: true}
 )
