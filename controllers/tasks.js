@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { Tasks } = require('../models')
+const { handleValidate, requireToken } = require('../middleware/auth')
 
 //All Tasks
 router.get('', async (req, res, next) => {
@@ -25,37 +26,39 @@ router.get('/:id', async (req, res, next) => {
 })
 
 //New Task
-router.post('', async (req, res, next) => {
+router.post('', requireToken, async (req, res, next) => {
     try {
+        const owner = req.user._id
+        req.body.owner = owner
         const newTask = req.body
         await Tasks.create(newTask)
-        res.send(`Okey Dokey`)
+        res.status(201).json(newTask);
     } catch(err) {
-        console.log(err)
-        next()
+        res.status(400).json({error: err.message})
     }
 })
 
 //Edit Task
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', requireToken, async (req, res, next) => {
     try {
-        const updatedTask = await Tasks.findByIdAndUpdate(req.params.id, req.body)
-        res.send(`Okey Dokey`)
+        handleValidate(req, await Tasks.findById(req.params.id))
+        const updatedTask = await Tasks.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        res.status(200).json(updatedTask)
     } catch(err) {
-        console.log(err)
+        res.status(400).json({error: err.message})
         next()
     }
 })
 
 //Delete Task
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', requireToken, async (req, res, next) => {
     try {
+        handleValidate(req, await Tasks.findById(req.params.id))
         const task = req.params.id
         await Tasks.findByIdAndDelete(task)
-        res.send(`Okey Dokey`)
+        res.status(200).json(task)
     } catch(err) {
-        console.log(err)
-        next()
+        res.status(400).json({ error: err.message})
     }
 })
 

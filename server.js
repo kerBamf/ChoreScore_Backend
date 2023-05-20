@@ -6,12 +6,14 @@ const taskController = require('./controllers/tasks')
 const userController = require('./controllers/users')
 const rewardController = require('./controllers/rewards')
 const quotesController = require('./controllers/quotes')
+const authController = require('./controllers/auth')
 
 //Middleware
 app.use(cors())
 app.use(express.json())
 app.use('/tasks', taskController)
 app.use('/users', userController)
+app.use('/auth', authController);
 app.use('/rewards', rewardController)
 app.use('/quotes', quotesController)
 

@@ -12,6 +12,11 @@ const rewardSchema = new mongoose.Schema(
         },
         description: {
             type: String
+        },
+        owner: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
         }
     }
 )

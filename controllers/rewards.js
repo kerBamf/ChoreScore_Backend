@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { Rewards } = require('../models')
+const { handleValidate, requireToken } = require('../middleware/auth')
 
 //All Rewards
 router.get('', async (req, res, next) => {
@@ -25,11 +26,13 @@ router.get('/:id', async (req, res, next) => {
 })
 
 //New Reward
-router.post('', async (req, res, next) => {
+router.post('', requireToken, async (req, res, next) => {
     try {
-    const newReward = req.body
-    await Rewards.create(newReward)
-    res.send('Okey Dokey')
+        const owner = req.user._id
+        req.body.owner = owner
+        const newReward = req.body
+        await Rewards.create(newReward)
+        res.status(201).json(newReward)
     } catch(err) {
         console.log(err)
         next()
@@ -37,11 +40,13 @@ router.post('', async (req, res, next) => {
 })
 
 //Edit Reward
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', requireToken, async (req, res, next) => {
     try {
+        handleValidate(req, await Rewards.findById(req.params.id))
         const updatedReward = req.body
         await Rewards.findByIdAndUpdate(req.params.id,updatedReward)
         res.redirect('/rewards')
+        res.status(400).json(updatedReward)
     } catch(err) {
         console.log(err)
         next()
@@ -51,12 +56,12 @@ router.put('/:id', async (req, res, next) => {
 //Delete Reward
 router.delete('/:id', async (req, res, next) => {
     try {
+        handleValidate(req, await Rewards.findById(req.params.id))
         const reward = req.params.id
         await Rewards.findByIdAndDelete(reward)
-        res.send('Okey Dokey')
+        res.status(200).json(reward)
     } catch(err) {
-        console.log(err)
-        next()
+        res.status(400).json({ error: err.message})
     }
 })
 

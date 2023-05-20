@@ -40,7 +40,7 @@ router.post('', async (req, res, next) => {
     }
 })
 
-//Refresh Quote LIst
+//Refresh Quote List
 router.put('/:id', async (req, res, next) => {
     try{
         let quotes = req.body
