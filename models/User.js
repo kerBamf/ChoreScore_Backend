@@ -11,7 +11,19 @@ const userSchema = new mongoose.Schema (
             type: String,
             required: true,
         },
-        
+        image: {
+            type: String
+        },
+        credits : {
+            type: Number,
+            required: true,
+            default: 0
+        },
+        tasksDone: {
+            type: Number,
+            required: true,
+            default: 0
+        }
     },
     {
         timestamps: true,

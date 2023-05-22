@@ -37,9 +37,10 @@ const createUserToken = (req, user) => {
 
             error.statusCode = 422
             throw error
-        }
+        } else {
 
         return jwt.sign({id: user._id},secret,{expiresIn: 36000})
+        }
 }
 
 //Authorization
