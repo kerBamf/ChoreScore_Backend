@@ -4,10 +4,15 @@ const { Rewards } = require('../models')
 const { handleValidate, requireToken } = require('../middleware/auth')
 
 //All Rewards
-router.get('', async (req, res, next) => {
+router.get('', requireToken, async (req, res, next) => {
     try{
         let rewards = await Rewards.find({})
-        res.json(rewards)
+        let rewardsArr = rewards.map((value) => {
+            if (value.owner.id == req.user._id) {
+                return value
+            }
+        })
+        res.json(rewardsArr)
 
     } catch(err) {
         console.log(err)
@@ -16,7 +21,7 @@ router.get('', async (req, res, next) => {
 })
 
 //Single Reward By Id
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', requireToken, async (req, res, next) => {
     try{
         let reward = await Rewards.findById(req.params.id)
         res.json(reward)
@@ -54,7 +59,7 @@ router.put('/:id', requireToken, async (req, res, next) => {
 })
 
 //Delete Reward
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', requireToken, async (req, res, next) => {
     try {
         handleValidate(req, await Rewards.findById(req.params.id))
         const reward = req.params.id

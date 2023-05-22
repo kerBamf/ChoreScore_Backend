@@ -4,10 +4,16 @@ const { Tasks } = require('../models')
 const { handleValidate, requireToken } = require('../middleware/auth')
 
 //All Tasks
-router.get('', async (req, res, next) => {
+router.get('', requireToken, async (req, res, next) => {
     try{
         let tasks = await Tasks.find({})
-        res.json(tasks)
+        let taskArr = tasks.map((value) => {
+            if (value.owner.id == req.user._id) {
+                return value
+            }
+        })
+
+        res.json(taskArr)
 
     } catch(err) {
         console.log(err)
@@ -16,7 +22,7 @@ router.get('', async (req, res, next) => {
 })
 
 //Single Task by ID
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', requireToken, async (req, res, next) => {
     try{
         let task = await Tasks.findById(req.params.id)
         res.json(task)
