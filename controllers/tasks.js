@@ -6,14 +6,21 @@ const { handleValidate, requireToken } = require('../middleware/auth')
 //All Tasks
 router.get('', requireToken, async (req, res, next) => {
     try{
-        let tasks = await Tasks.find({})
-        let taskArr = tasks.map((value) => {
-            if (value.owner.id == req.user._id) {
-                return value
-            }
-        })
-
-        res.json(taskArr)
+        console.log(req.user)
+        console.log(req.user._id)
+        
+        let tasks = await Tasks.find({owner: req.user._id})
+        console.log(tasks)
+        // let taskArr = tasks.map((value) => {
+        //         console.log(value.owner)
+        //         console.log(req.user._id)
+        //         if (value.owner === req.user._id) {
+        //             console.log(value)
+        //             return value
+        //         }
+        //     })
+        console.log(tasks)
+        res.json(tasks)
 
     } catch(err) {
         console.log(err)
