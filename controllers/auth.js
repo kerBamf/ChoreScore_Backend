@@ -57,7 +57,7 @@ router.post("/login", async (req, res, next) => {
 
 //Logout Route
 
-router.get('/logout', requireToken, async (req, res, next) => {
+router.get('/logout', async (req, res, next) => {
     try {
         console.log("Logout was hit")
         const currentUser = req.user.username
