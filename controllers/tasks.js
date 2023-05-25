@@ -10,16 +10,6 @@ router.get('', requireToken, async (req, res, next) => {
         console.log(req.user._id)
         
         let tasks = await Tasks.find({owner: req.user._id})
-        console.log(tasks)
-        // let taskArr = tasks.map((value) => {
-        //         console.log(value.owner)
-        //         console.log(req.user._id)
-        //         if (value.owner === req.user._id) {
-        //             console.log(value)
-        //             return value
-        //         }
-        //     })
-        console.log(tasks)
         res.json(tasks)
 
     } catch(err) {

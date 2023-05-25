@@ -55,13 +55,27 @@ router.post("/login", async (req, res, next) => {
     }
 })
 
+//Edit User for score and tasks completed
+router.put('/update', requireToken, async (req, res, next) => {
+    try {
+    console.log(req.body)
+    const username = req.body.username;
+    await User.findOneAndUpdate({username: username}, req.body);
+    res.status(200).json({updateSuccessful: true})
+    } catch(err) {
+        console.log(err)
+        res.status(401).json({updateSuccessful: false})
+    }
+})
+
 //Logout Route
 
-router.get('/logout', async (req, res, next) => {
+router.get('/logout', requireToken, async (req, res, next) => {
     try {
         console.log("Logout was hit")
         const currentUser = req.user.username
-        delete req.user
+        //delete req.user
+        console.log(currentUser)
         res.status(200).json({
             message: `${currentUser} currently logged out`,
             isLoggedIn: false,

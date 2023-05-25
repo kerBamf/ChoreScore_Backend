@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema (
         image: {
             type: String
         },
-        credits : {
+        credits: {
             type: Number,
             required: true,
             default: 0
