@@ -7,11 +7,6 @@ const { handleValidate, requireToken } = require('../middleware/auth')
 router.get('', requireToken, async (req, res, next) => {
     try{
         let rewards = await Rewards.find({owner: req.user._id})
-        // let rewardsArr = rewards.map((value) => {
-        //     if (value.owner.id == req.user._id) {
-        //         return value
-        //     }
-        // })
         res.json(rewards)
 
     } catch(err) {
