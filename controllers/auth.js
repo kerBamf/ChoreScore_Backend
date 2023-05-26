@@ -44,11 +44,13 @@ router.post("/login", async (req, res, next) => {
         const foundUser = await User.findOne({ username: loggingUser})
         console.log(foundUser)
         const token = await createUserToken(req, foundUser);
-        res.status(200).json({
+        let resObject = {
             user: foundUser,
             isLoggedIn: true,
             token
-        })
+        }
+        res.status(200).json(resObject
+        )
     } catch(err) {
         console.log(err)
         res.status(401).json({ error: err.message })
@@ -58,10 +60,10 @@ router.post("/login", async (req, res, next) => {
 //Edit User for score and tasks completed
 router.put('/update', requireToken, async (req, res, next) => {
     try {
-    console.log(req.body)
-    const username = req.body.username;
-    await User.findOneAndUpdate({username: username}, req.body);
-    res.status(200).json({updateSuccessful: true})
+        const username = req.body.username;
+        await User.findOneAndUpdate({username: username}, req.body);
+        res.status(200).json({updateSuccessful: true})
+        console.log(req.body)
     } catch(err) {
         console.log(err)
         res.status(401).json({updateSuccessful: false})
