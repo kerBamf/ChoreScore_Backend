@@ -22,7 +22,7 @@ router.post('/register', async (req, res, next) => {
             req.body.password = pwStore;
             const authenticatedUserToken = createUserToken(req, newUser)
             res.status(201).json({
-                currentUser: newUser,
+                user: newUser,
                 isLoggedIn: true,
                 token: authenticatedUserToken
             })
