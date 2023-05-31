@@ -17,39 +17,27 @@ router.get('', async (req, res, next) => {
 
 //Original Quotes Post (should only happen once)
 
-router.post('', async (req, res, next) => {
-    try{
-        let quoteObject = req.body
-        const quoteArray = quoteObject.quotes
-        for await (const value of quoteArray) {
-            try {
-                let newQuote = {
-                    "quote": value.text,
-                    "author": value.author
-                }
-                console.log(`New Quote: ${newQuote}`)
-                await Quotes.create(newQuote)
-            } catch(err) {
-                console.log(err)
-            }
-        }
-        res.send("Okey Dokey")
-    } catch(err) {
-        console.log(err)
-        next()
-    }
-})
-
-//Refresh Quote List
-router.put('/:id', async (req, res, next) => {
-    try{
-        let quotes = req.body
-        await Quotes.findByIdAndUpdate(req.params.id)
-        res.send('Okey Dokey')
-    } catch(err) {
-        console.log(err)
-        next()
-    }
-})
+// router.post('', async (req, res, next) => {
+//     try{
+//         let quoteObject = req.body
+//         const quoteArray = quoteObject.quotes
+//         for await (const value of quoteArray) {
+//             try {
+//                 let newQuote = {
+//                     "quote": value.text,
+//                     "author": value.author
+//                 }
+//                 console.log(`New Quote: ${newQuote}`)
+//                 await Quotes.create(newQuote)
+//             } catch(err) {
+//                 console.log(err)
+//             }
+//         }
+//         res.send("Okey Dokey")
+//     } catch(err) {
+//         console.log(err)
+//         next()
+//     }
+// })
 
 module.exports = router

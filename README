@@ -1,5 +1,17 @@
-Task 
+# Project 3: JOYERN - Back-End
+As the backend for my JOYERN task-gamifying app, this services is responsible for handling user, task, and reward data being stored in MongoDB, as well as a stash of inspirational quotes being used rotation at the bottom of the app.
 
+## Tech and Approach
+This backend uses express as its framework and runs on Node.js, utliziing Mongoose for database schema construction and RESTful interaction. CORS is used to enable front-end access to data, and a JWT strategy is used to enable auth, with Bcrypt used for password encryption.
 
+This backend utilizes 4 database models with an associated route controller for each. Task and Reward routes have full CRUD functionality. The Auth routes (which handle user data and auth simultaneously) have full Crud save a DELETE route.
 
-Footer: Grabbing inspirational quotes from an external API - https://zenquotes.io/
+The Quotes model functions as a static dataset inaccessible to the user, so only a GET route is accessed by the front end. A POST route has been left in as commented-out code in case the database needs to be seeded again. Quotes were seeded by a collection found here:
+
+https://forum.freecodecamp.org/t/free-api-inspirational-quotes-json-with-code-examples/311373
+
+## Difficulties
+
+The most difficult part of implementing this back end was Auth, unsurprisingly. A great deal of care needed to be made to make sure the strategies defined for JWT had the correct syntax. Understanding what the different pieces of auth DID was very confusing for some time, but in the end the greater concepts make sense and I was able to customize as needed to fit my app's needs. I also did more work with Mongoose as a database, using methods I hadn't used before to make better use of Mongo's capabilities as a database. 
+
+Setting up the proper user/item relationship was also difficult at first, however when given a basis from the Auth guide to build on, I came to a better understanding of how to utilize user IDs as a reference within other models. As of now, the app is fully capable of filtering tasks and rewards based on the user who created them, which was a major milestone in my app's functionality.
